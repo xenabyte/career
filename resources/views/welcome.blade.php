@@ -270,7 +270,7 @@
                             </div>
         
                             
-                            <img src="{{ asset('assets/images/about.jpg') }}" alt="" class="img-fluid mx-auto rounded-3" />
+                            <img src="{{ asset('assets/images/about.png') }}" alt="" class="img-fluid mx-auto rounded-3" />
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -385,7 +385,7 @@
 
                 <div class="row">
                     @foreach($jobVacancies as $jobVacancy)
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 mb-3">
                             <div class="card same-height shadow-lg">
                                 <div class="card-body same-height-body">
                                     <div class="d-flex">
