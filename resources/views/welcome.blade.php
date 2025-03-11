@@ -77,7 +77,7 @@
         
 
         <!-- start hero section -->
-        <section class="section job-hero-section bg-light pb-0" id="hero">
+        <section class="section job-hero-section bg-light pb-5" id="hero">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-6">
@@ -98,6 +98,7 @@
                                                 <option value="">Select job type</option>
                                                 <option value="Job Vacancy">Full Time</option>
                                                 <option value="Work Study">Work Study</option>
+                                                <option value="SIWES">SIWES</option>
                                             </select>
                                         </div>
                                     </div>
@@ -346,7 +347,7 @@
                     <!-- end col -->
                     <div class="col-sm-auto">
                         <div>
-                            <a href="{{ env('PORTAL_URL').'/career/register' }}" class="btn bg-gradient btn-danger">Create Free Account</a>
+                            <a href="{{ env('PORTAL_URL').'/jobVacancy/register' }}" class="btn bg-gradient btn-danger">Create Free Account</a>
                         </div>
                     </div>
                     <!-- end col -->
@@ -387,32 +388,23 @@
                     @foreach($jobVacancies as $jobVacancy)
                         <div class="col-lg-4 mb-3">
                             <div class="card same-height shadow-lg">
+                                <img class="card-img-top img-fluid" src="{{ env('PORTAL_URL').'/'. $jobVacancy->image }}" alt="{{ $jobVacancy->title }}">
                                 <div class="card-body same-height-body">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm">
-                                            <div class="avatar-title bg-warning-subtle rounded">
-                                                <img src="{{ asset('assets/images/career1.png') }}" alt="" class="avatar-xxs">
-                                            </div>
-                                        </div>
-                                        <div class="ms-3 flex-grow-1">
-                                            <a href="#!">
-                                                <h5>{{ $jobVacancy->title }}</h5>
-                                            </a>
-                                            <ul class="list-inline text-muted mb-3">
-                                                <li class="list-inline-item">
-                                                    <i class="ri-building-line align-bottom me-1"></i> {{ $jobVacancy->type }}
-                                                </li>
-                                            </ul>
-                                            <div class="hstack">
-                                                {{ \Str::limit(strip_tags($jobVacancy->description), 250) }}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn bg-primary btn-ghost-light btn-icon custom-toggle" data-bs-toggle="modal" data-bs-target="#jobVacancyModal{{ $jobVacancy->id }}">
-                                                <span class="icon-on"><i class="ri-eye-line"></i></span>
-                                                <span class="icon-off"><i class="ri-eye-off-line"></i></span>
-                                            </button>
-                                        </div>
+                                    <a href="{{ env('APP_URL').'/jobVacancy/'.$jobVacancy->slug}}"><h4 class="card-title mb-2">{{ $jobVacancy->title }}</h4></a>
+                                    <ul class="list-inline text-muted mb-3">
+                                        <li class="list-inline-item">
+                                            <i class="ri-building-line align-bottom me-1"></i> {{ $jobVacancy->type }}
+                                        </li>
+                                    </ul>
+                                    <p class="card-text">{!! \Str::limit(strip_tags($jobVacancy->description), 250) !!}</p>
+                                    
+                                    <hr>
+                                    <div class="text-end">
+                                        <a href="{{ env('APP_URL').'/jobVacancy/'.$jobVacancy->slug}}" class="btn btn-primary">Job Details</a>
+                                        <button type="button" class="btn bg-primary btn-ghost-light btn-icon custom-toggle" data-bs-toggle="modal" data-bs-target="#jobVacancyModal{{ $jobVacancy->id }}">
+                                            <span class="icon-on"><i class="ri-eye-line"></i></span>
+                                            <span class="icon-off"><i class="ri-eye-off-line"></i></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -449,29 +441,25 @@
                     <!-- end col -->
                     <div class="col-lg-4 col-sm-7 col-10 ms-lg-auto mx-auto order-1 order-lg-2">
                         <div>
+                            
                             <div class="card shadow-lg">
                                 <div class="card-body">
-                                    <button type="button" class="btn btn-icon btn-soft-primary float-end" data-bs-toggle="button" aria-pressed="true"><i class="mdi mdi-cards-heart fs-16"></i></button>
-                                    <div class="avatar-sm mb-4">
-                                        <div class="avatar-title bg-secondary-subtle rounded">
-                                            <img src="{{ asset('assets/images/career1.png') }}" alt="" class="avatar-xxs">
-                                        </div>
-                                    </div>
-                                    <a href="#!">
+                                    <a href="{{ env('APP_URL').'/jobVacancy/'.$jobVacancies[0]->slug}}"><img class="card-img-top img-fluid" src="{{ env('PORTAL_URL').'/'. $jobVacancies[0]->image }}" alt="{{ $jobVacancies[0]->title }}"></a>
+                                    <a href="{{ env('APP_URL').'/jobVacancy/'.$jobVacancies[0]->slug}}">
                                         <h5>{{ $jobVacancies[0]->title }}</h5>
                                     </a>
                                     <p class="text-muted">{{ $jobVacancies[0]->type }}</p>
         
         
-                                    <p class="text-muted">{{ \Str::limit(strip_tags($jobVacancies[0]->description), 250) }}</p>
+                                    <p class="text-muted">{!! \Str::limit(strip_tags($jobVacancies[0]->description), 250) !!}</p>
         
 
         
                                     <div class="mt-4 hstack gap-2">
-                                        <a href="{{ $jobVacancy->type == 'Work Study' ? env('PORTAL_URL').'/student' : env('PORTAL_URL').'/career' }}" class="btn btn-primary">
+                                        <a href="{{ $jobVacancies[0]->type == 'Work Study' ? env('PORTAL_URL').'/student' : env('PORTAL_URL').'/career' }}" class="btn btn-primary">
                                             Apply
                                         </a>
-                                        <a href="#" class="btn btn-soft-success w-100" data-bs-toggle="modal" data-bs-target="#jobVacancyModal{{ $jobVacancies[0]->id }}">More Details</a>
+                                        <a href="{{ env('APP_URL').'/jobVacancy/'.$jobVacancies[0]->slug}}" class="btn btn-soft-success w-100">More Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -499,7 +487,7 @@
                     </div>
                     <!-- end col -->
                     <div class="col-sm-auto">
-                        <a href="{{ env('PORTAL_URL').'/career/register' }}" class="btn btn-danger" type="button">Subscribe Now <i class="ri-arrow-right-line align-bottom"></i></a>
+                        <a href="{{ env('PORTAL_URL').'/jobVacancy/register' }}" class="btn btn-danger" type="button">Subscribe Now <i class="ri-arrow-right-line align-bottom"></i></a>
                     </div>
                     <!-- end col -->
                 </div>

@@ -28,5 +28,18 @@ class WelcomeController extends Controller
             'workStudies' => $workStudies,
         ]);
     }
+
+
+    public function jobVacancy($slug){
+
+        $jobVacancy = JobVacancy::with('applications')->where('slug', $slug)->first();
+
+        $jobVacancies = JobVacancy::where('id', '!=', $jobVacancy->id)->orderBy('id', 'desc')->take(6)->get();
+
+        return view('jobVacancyDetails', [
+            'jobVacancy' => $jobVacancy,
+            'jobVacancies' => $jobVacancies
+        ]);
+    }
 }
 

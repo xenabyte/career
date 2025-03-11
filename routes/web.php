@@ -18,4 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'welcome'])->name('welcome');
+Route::get('/jobVacancy/{slug}', [App\Http\Controllers\WelcomeController::class, 'jobVacancy'])->name('jobVacancy');
 
